@@ -15,8 +15,10 @@ class NNodeContentBase(QLabel):  # , Serializable):
         self.lbl.setStyleSheet("border: 1px solid black;")
         layout.addWidget(self.lbl)
         self.setLayout(layout)
-        self.lbl_size = [self.lbl.width(), self.lbl.height()]
+        self.lbl_size = None
 
     def update(self):
+        if not self.lbl_size:
+            self.lbl_size = [self.lbl.width(), self.lbl.height()]
         if self.node.value != None:
-                self.lbl.setPixmap(self.node.value.scaled(self.lbl_size[0], self.lbl_size[1], QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+                self.lbl.setPixmap(self.node.value.scaled(self.lbl_size[0],self.lbl_size[1], QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))

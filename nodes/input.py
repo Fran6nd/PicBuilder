@@ -50,14 +50,11 @@ class Input(Node):
             return self.value
 
     def eval(self):
-        print("input eval running")
         val = self.evalImplementation()
         if not self.isDirty() and not self.isInvalid():
             pass
 
         try:
-
-            print("...ok")
             return val
         except ValueError as e:
             self.markInvalid()
