@@ -33,17 +33,20 @@ if __name__ == '__main__':
             btn = QPushButton('Browse', self)
             layout.addWidget(btn)
             layout.addWidget(lbl)
-            def browse(blah):
-                fileName, _ = QtWidgets.QFileDialog.getOpenFileName(None, 'Choose an image', "." , '*.png')
-                if os.path.isfile(fileName):
-                    pixmap = QPixmap(fileName)
+            def load_image(path):
+                if os.path.isfile(path):
+                    pixmap = QPixmap(path)
                 #self.setScaledContents(True)
                 #self.setSizePolicy( QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
                     pixmap = pixmap.scaledToWidth(100)
                     lbl.resize(pixmap.width(), pixmap.height())
                     lbl.setPixmap(pixmap)
+            def browse(blah):
+                fileName, _ = QtWidgets.QFileDialog.getOpenFileName(None, 'Choose an image', "." , '*.png')
+                load_image(fileName)
                 pass
             btn.clicked.connect(browse)
+            load_image("./empty.png")
             self.setLayout(layout)
 
             #self.adjustSize()
