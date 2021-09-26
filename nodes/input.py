@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout
 from nodeeditor.node_node import Node
+from nodeeditor.node_scene import Scene
 
 
 class NNodeContent(QLabel):  # , Serializable):
@@ -42,4 +43,7 @@ class NNodeContent(QLabel):  # , Serializable):
 
 
 class Input(Node):
+    def __init__(self, scene: 'Scene'):
+        super().__init__(scene, title="Image Input", outputs=[1])
+
     NodeContent_class = NNodeContent

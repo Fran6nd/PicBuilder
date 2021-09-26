@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
 
     wnd.nodeeditor.scene.setNodeClassSelector(lambda data: Input)
-    node = Input( wnd.nodeeditor.scene,title = "Input", outputs=[0])
+    node = Input( wnd.nodeeditor.scene)
 
 
 
