@@ -2,8 +2,8 @@ import os, sys, inspect
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QPushButton, QSizePolicy
+from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtWidgets import QPushButton, QSizePolicy, QVBoxLayout
 from qtpy.QtWidgets import QApplication, QLabel
 
 sys.path.insert(0, os.path.join( os.path.dirname(__file__), "..", ".." ))
@@ -27,30 +27,25 @@ if __name__ == '__main__':
             super().__init__()
             self.node = node
             self.setParent(parent)
-            
+            layout = QVBoxLayout()
             lbl = QLabel(self)
-
             lbl.setAlignment(QtCore.Qt.AlignCenter)
-
-            btn = QPushButton('Browse', lbl)
+            btn = QPushButton('Browse', self)
+            layout.addWidget(btn)
+            layout.addWidget(lbl)
             def browse(blah):
                 fileName, _ = QtWidgets.QFileDialog.getOpenFileName(None, 'Choose an image', "." , '*.png')
-                if fileName != None:
+                if os.path.isfile(fileName):
                     pixmap = QPixmap(fileName)
                 #self.setScaledContents(True)
                 #self.setSizePolicy( QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
-                    pixmap = pixmap.scaledToWidth(160)
+                    pixmap = pixmap.scaledToWidth(100)
+                    lbl.resize(pixmap.width(), pixmap.height())
                     lbl.setPixmap(pixmap)
                 pass
             btn.clicked.connect(browse)
-            path = ""
-            pixmap = QPixmap('./wolf.png')
-            if input != None:
-                pixmap = QPixmap(input)
-            #self.setScaledContents(True)
-            #self.setSizePolicy( QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
-            pixmap = pixmap.scaledToWidth(160)
-            lbl.setPixmap(pixmap)
+            self.setLayout(layout)
+
             #self.adjustSize()
 
 
@@ -59,7 +54,7 @@ if __name__ == '__main__':
         NodeContent_class = NNodeContent
 
     wnd.nodeeditor.scene.setNodeClassSelector(lambda data: Input)
-    node = Input( wnd.nodeeditor.scene, outputs=[0, 1, 2])
+    node = Input( wnd.nodeeditor.scene,title = "Input", outputs=[0])
 
     print("node content:", node.content)
 
