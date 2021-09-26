@@ -27,19 +27,15 @@ if __name__ == '__main__':
             self.setParent(parent)
             lbl = QLabel(self)
 
-            lbl.setScaledContents(True)
             lbl.setAlignment(QtCore.Qt.AlignCenter)
             btn = QPushButton('PyQt5 button', self)
             path = ""
-            def on_click(bla):
-                path = "gogo"
-                
-                self.setPixmap(pixmap)
             pixmap = QPixmap('./wolf.png')
-            self.setScaledContents(True)
-            self.setSizePolicy( QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored)
-            btn.clicked.connect(on_click)
+            #self.setScaledContents(True)
+            #self.setSizePolicy( QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
+            pixmap = pixmap.scaledToWidth(160)
             self.setPixmap(pixmap)
+            #self.adjustSize()
 
 
 
