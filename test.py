@@ -38,12 +38,7 @@ class window(NodeEditorWindow):
     NodeEditorWidget_class = nodeditorwidget
     def createActions(self):
         super().createActions()
-        """Create basic `File` and `Edit` actions"""
-        def tt(node):
-            node(self.nodeeditor.scene)
-        nodeList = [Input, FlipBlackNWhite]
-        for node in nodeList:
-            self.addInput = QAction('&Add ' + node.__name__, self, statusTip="Add a new image input", triggered=partial(tt, node))
+
 
 
     def createMenus(self):
@@ -66,7 +61,13 @@ class window(NodeEditorWindow):
     def createAddMenu(self):
         menubar = self.menuBar()
         self.fileMenu = menubar.addMenu('&Add')
-        self.fileMenu.addAction(self.addInput)
+        """Create basic `File` and `Edit` actions"""
+        def tt(node):
+            node(self.nodeeditor.scene)
+        nodeList = [Input, FlipBlackNWhite]
+        for node in nodeList:
+            self.fileMenu.addAction(QAction('&Add ' + node.__name__, self, statusTip="Add a new image input", triggered=partial(tt, node)))
+        #self.fileMenu.addAction(self.addInput)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
