@@ -1,13 +1,14 @@
 import os
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout
 from nodeeditor.node_node import Node
 from nodeeditor.node_scene import Scene
 from nodeContentBase import NNodeContentBase
 
 class BaseNode(Node):
+    value = QImage
     def __init__(self, scene: 'Scene', title="Base Node", inputs: list=[], outputs: list=[]):
         super().__init__(scene, title=title, inputs=inputs, outputs=outputs)
     def evalImplementation(self):
@@ -22,7 +23,7 @@ class BaseNode(Node):
 
         else:
             print("output input connected")
-            val = i1.eval()
+            val = i1.value
             self.value = val
             self.markDirty(False)
             self.markInvalid(False)
@@ -39,6 +40,7 @@ class BaseNode(Node):
         if not self.isDirty() and not self.isInvalid():
             try:
                 self.value = val
+                self.apply()
                 self.content.update()
                 self.evalChildren()
                 return val
@@ -57,4 +59,6 @@ class BaseNode(Node):
         print(self.title, "input changed")
         self.eval()
         #self.evalChildren()
+    def apply(self):
+        pass
     NodeContent_class = NNodeContentBase

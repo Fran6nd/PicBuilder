@@ -1,4 +1,5 @@
 from PyQt5 import QtCore
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QLabel, QVBoxLayout
 
 
@@ -21,4 +22,5 @@ class NNodeContentBase(QLabel):  # , Serializable):
         if not self.lbl_size:
             self.lbl_size = [self.lbl.width(), self.lbl.height()]
         if self.node.value != None:
-                self.lbl.setPixmap(self.node.value.scaled(self.lbl_size[0],self.lbl_size[1], QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+            pm = QPixmap.fromImage(self.node.value)
+            self.lbl.setPixmap(pm.scaled(self.lbl_size[0],self.lbl_size[1], QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))

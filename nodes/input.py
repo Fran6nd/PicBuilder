@@ -22,7 +22,7 @@ class NNodeContent(QLabel):  # , Serializable):
             def load_image(path):
                 if os.path.isfile(path):
                     pixmap = QPixmap(path)
-                    self.node.value = pixmap
+                    self.node.value = pixmap.toImage()
                     lbl.setScaledContents(True)
                 #self.setSizePolicy( QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
                     pixmap = pixmap.scaledToWidth(lbl.width())
