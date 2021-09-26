@@ -23,6 +23,7 @@ class NNodeContent(QLabel):  # , Serializable):
             def load_image(path):
                 if os.path.isfile(path):
                     pixmap = QPixmap(path)
+                    self.node.value = pixmap
                     lbl.setScaledContents(True)
                 #self.setSizePolicy( QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
                     pixmap = pixmap.scaledToWidth(lbl.width())
@@ -45,5 +46,24 @@ class NNodeContent(QLabel):  # , Serializable):
 class Input(Node):
     def __init__(self, scene: 'Scene'):
         super().__init__(scene, title="Image Input", outputs=[1])
+    def evalImplementation(self):
+            return self.value
 
+    def eval(self):
+        print("input eval running")
+        val = self.evalImplementation()
+        if not self.isDirty() and not self.isInvalid():
+            pass
+
+        try:
+
+            print("...ok")
+            return val
+        except ValueError as e:
+            self.markInvalid()
+            self.grNode.setToolTip(str(e))
+            self.markDescendantsDirty()
+        except Exception as e:
+            self.markInvalid()
+            self.grNode.setToolTip(str(e))
     NodeContent_class = NNodeContent

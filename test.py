@@ -1,3 +1,4 @@
+from nodes.output import Output
 import os, sys, inspect
 from PyQt5 import QtCore
 from PyQt5 import QtGui
@@ -23,6 +24,7 @@ if __name__ == '__main__':
 
     wnd.nodeeditor.scene.setNodeClassSelector(lambda data: Input)
     node = Input( wnd.nodeeditor.scene)
+    node = Output( wnd.nodeeditor.scene)
 
 
 
