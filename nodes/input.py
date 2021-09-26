@@ -15,7 +15,6 @@ class NNodeContent(QLabel):  # , Serializable):
             layout = QVBoxLayout()
 
             lbl = QLabel(self)
-            lbl.setAlignment(QtCore.Qt.AlignCenter)
             lbl.setStyleSheet("border: 1px solid black;")
             btn = QPushButton('Browse', self)
             layout.addWidget(btn)

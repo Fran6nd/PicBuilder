@@ -11,6 +11,7 @@ class NNodeContent(QLabel):  # , Serializable):
     def __init__(self, node, parent=None, input = None):
         super().__init__()
         self.node = node
+        self.node.value = None
         self.setParent(parent)
         layout = QVBoxLayout()
 
@@ -24,7 +25,7 @@ class NNodeContent(QLabel):  # , Serializable):
         def browse(blah):
             self.node.eval()
             if self.node.value != None:
-                lbl.setPixmap(self.node.value)
+                 lbl.setPixmap(self.node.value.scaled(lbl.width(), lbl.height(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
         btn.clicked.connect(browse)
 
         #self.adjustSize()
