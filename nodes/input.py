@@ -33,6 +33,7 @@ class NNodeContent(QLabel):  # , Serializable):
             def browse(blah):
                 fileName, _ = QtWidgets.QFileDialog.getOpenFileName(None, 'Choose an image', "." , 'Image Files(*.png *.jpg *.bmp)')
                 load_image(fileName)
+                self.node.evalChildren()
                 pass
             btn.clicked.connect(browse)
             load_image("./empty.png")

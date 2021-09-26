@@ -54,4 +54,8 @@ class FlipBlackNWhite(Node):
                 self.grNode.setToolTip(str(e))
     def onEdgeConnectionChanged(self, edge):
         self.eval()
+        self.evalChildren()
+    def onInputChanged(self, socket):
+        self.eval()
+        self.evalChildren()
     NodeContent_class = NNodeContentBase
