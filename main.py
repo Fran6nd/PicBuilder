@@ -11,6 +11,14 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QApplication
 from PyQt5.QtWidgets import QAction, qApp
 
+class Canva(QWidget):
+    #evenement QPaintEvent
+    def paintEvent(self, event): # event de type QPaintEvent
+        painter = QPainter(self)
+        painter.setPen(QPen(Qt.green,  8, Qt.DashLine))
+        painter.drawEllipse(40, 40, 400, 400)
+    # Blabla de dessin ici
+
 class Window(QMainWindow):
 
     def __init__(self):
@@ -31,7 +39,7 @@ class Window(QMainWindow):
 
     def InitWindow(self):
 
-        self.setGeometry(200, 200, 200, 200)           
+        self.setGeometry(self.top, self.left, self.width, self.height)         
         
         exitAction = QAction('&Exit', self)        
         exitAction.setShortcut('Ctrl+Q')
@@ -45,13 +53,12 @@ class Window(QMainWindow):
         fileMenu.addAction(exitAction)
         
         
-        self.setWindowTitle('PyQt5 Basic Menubar')    
+        self.setWindowTitle('PicBuilder by Fran6nd')
+        self.setCentralWidget(Canva())
         self.show()
 
     def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setPen(QPen(Qt.green,  8, Qt.DashLine))
-        painter.drawEllipse(40, 40, 400, 400)
+        pass
 
 App = QApplication(sys.argv)
 
