@@ -14,7 +14,7 @@ from nodeeditor.utils import loadStylesheet
 from nodeeditor.node_node import Node
 from nodeeditor.node_editor_window import NodeEditorWindow
 from nodes.input import Input
-from nodes.
+from nodes.flipBlackNWhite import FlipBlackNWhite
 
 
 if __name__ == '__main__':

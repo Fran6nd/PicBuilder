@@ -15,19 +15,16 @@ class NNodeContent(QLabel):  # , Serializable):
         self.setParent(parent)
         layout = QVBoxLayout()
 
-        lbl = QLabel(self)
-        lbl.setAlignment(QtCore.Qt.AlignCenter)
-        lbl.setStyleSheet("border: 1px solid black;")
-        btn = QPushButton('Browse', self)
-        layout.addWidget(btn)
-        layout.addWidget(lbl)
+        self.lbl = QLabel(self)
+        self.lbl.setAlignment(QtCore.Qt.AlignCenter)
+        self.lbl.setStyleSheet("border: 1px solid black;")
+        layout.addWidget(self.lbl)
         self.setLayout(layout)
-        def browse(blah):
-            self.node.eval()
-            if self.node.value != None:
-                 lbl.setPixmap(self.node.value.scaled(lbl.width(), lbl.height(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
-        btn.clicked.connect(browse)
+        self.lbl_size = [self.lbl.width(), self.lbl.height()]
 
+    def update(self):
+        if self.node.value != None:
+                self.lbl.setPixmap(self.node.value.scaled(self.lbl_size[0], self.lbl_size[1], QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
         #self.adjustSize()
 
 
@@ -61,12 +58,15 @@ class Output(Node):
 
     def eval(self):
         print("Output eval running...")
+        
         val = self.evalImplementation()
         if not self.isDirty() and not self.isInvalid():
             try:
 
 
                 print("...ok")
+                self.value = val
+                self.content.update()
                 return val
             except ValueError as e:
                 self.markInvalid()
@@ -75,4 +75,6 @@ class Output(Node):
             except Exception as e:
                 self.markInvalid()
                 self.grNode.setToolTip(str(e))
+    def onEdgeConnectionChanged(self, edge):
+        self.eval()
     NodeContent_class = NNodeContent
