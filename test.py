@@ -1,5 +1,7 @@
 import os, sys, inspect
 from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QPushButton, QSizePolicy
 from qtpy.QtWidgets import QApplication, QLabel
@@ -21,20 +23,34 @@ if __name__ == '__main__':
     from nodeeditor.node_serializable import Serializable
 
     class NNodeContent(QLabel):  # , Serializable):
-        def __init__(self, node, parent=None):
+        def __init__(self, node, parent=None, input = None):
             super().__init__()
             self.node = node
             self.setParent(parent)
+            
             lbl = QLabel(self)
 
             lbl.setAlignment(QtCore.Qt.AlignCenter)
-            btn = QPushButton('PyQt5 button', self)
+
+            btn = QPushButton('Browse', lbl)
+            def browse(blah):
+                fileName, _ = QtWidgets.QFileDialog.getOpenFileName(None, 'Choose an image', "." , '*.png')
+                if fileName != None:
+                    pixmap = QPixmap(fileName)
+                #self.setScaledContents(True)
+                #self.setSizePolicy( QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
+                    pixmap = pixmap.scaledToWidth(160)
+                    lbl.setPixmap(pixmap)
+                pass
+            btn.clicked.connect(browse)
             path = ""
             pixmap = QPixmap('./wolf.png')
+            if input != None:
+                pixmap = QPixmap(input)
             #self.setScaledContents(True)
             #self.setSizePolicy( QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
             pixmap = pixmap.scaledToWidth(160)
-            self.setPixmap(pixmap)
+            lbl.setPixmap(pixmap)
             #self.adjustSize()
 
 
